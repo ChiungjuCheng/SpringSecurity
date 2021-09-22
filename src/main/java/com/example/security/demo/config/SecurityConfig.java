@@ -13,23 +13,23 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	// 設定需要驗證的url
-//	@Override
-//	protected void configure(HttpSecurity http) throws Exception {
-//		
-//		
-//		http.authorizeRequests().antMatchers(HttpMethod.GET, "/users/**").authenticated().antMatchers(HttpMethod.GET)
-//				.permitAll().antMatchers(HttpMethod.POST, "/users").permitAll().anyRequest().authenticated().and()
-//				.csrf().disable().formLogin();
-//	}
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+			
+		http.authorizeRequests()
+				.anyRequest().authenticated()
+			.and().csrf().disable()
+			.formLogin()
+				.loginPage("/customLoginPage")
+				.loginProcessingUrl("/loginProcess")
+				.permitAll();
+	}
 
 	// 設定使用者帳號、密碼和角色
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//		UserBuilder user = User.withDefaultPasswordEncoder();
-//
-//		auth.inMemoryAuthentication().withUser(user.username("test1").password("123").roles("ADMIN"));
-//
-//	}
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		UserBuilder user = User.withDefaultPasswordEncoder();
+		auth.inMemoryAuthentication().withUser(user.username("test1").password("123").roles("ADMIN"));
+	}
 
 }

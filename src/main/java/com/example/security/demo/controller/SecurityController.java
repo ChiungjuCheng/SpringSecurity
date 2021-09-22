@@ -7,9 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class SecurityController {
 
 	
-	@GetMapping("/adminPage")
-	public String adminPage() {
-		
+	@GetMapping("/users/adminPage")
+	public String adminPage() {		
 		return "admin";
+	}
+	
+	@GetMapping("/public")
+	public String publicPage() {
+		
+		return "public";
 	}
 }
