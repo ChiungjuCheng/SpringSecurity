@@ -1,16 +1,23 @@
 package com.example.security.demo.config;
 
-import org.springframework.security.core.userdetails.User;
-import org.springframework.http.HttpMethod;
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User.UserBuilder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	@Autowired
+	private DataSource securityDataSource;
+	
+//	 設定使用者帳號、密碼和角色
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.jdbcAuthentication().dataSource(securityDataSource);
+	}
 
 	// 設定需要驗證的url
 //	@Override
@@ -22,14 +29,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //				.csrf().disable().formLogin();
 //	}
 
-	// 設定使用者帳號、密碼和角色
-//	@Override
-//	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//
-//		UserBuilder user = User.withDefaultPasswordEncoder();
-//
-//		auth.inMemoryAuthentication().withUser(user.username("test1").password("123").roles("ADMIN"));
-//
-//	}
+
 
 }
