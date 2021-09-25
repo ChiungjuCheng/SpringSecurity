@@ -1,5 +1,17 @@
 在上一小節的username和password是用java code產生存在記憶體內，這一小節則是要使用關聯性資料庫，撈出使用者的資料並作驗證。
 #### 設定使用JDBC驗證 
+新增pom.xml
+```xml
+<!-- JDBC -->
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-jdbc</artifactId>
+</dependency>
+<dependency>
+	<groupId>com.oracle.database.jdbc</groupId>
+	<artifactId>ojdbc8</artifactId>
+</dependency>
+```
 1. 使用DataSource做驗證時，Spring security會自動撈取帳號密碼還有權限的資料，因此需要設定符合defalt設定的table schema*:
 
 ```sql
