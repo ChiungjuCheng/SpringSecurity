@@ -29,11 +29,40 @@ public interface UserDetailsService {
 
 ### 實作
 1. 覆寫UserDetailsService的loadUserByUsername(String username)
-   ```java
-   
-   ```
+```java
+   	@Autowired
+	private UserInfoRepository userInfoRepository;
 
-所有程式碼皆在security.userservice.demo
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+		UserInfoEntity userInfo = userInfoRepository.getUserByName(username);
+		if (userInfo == null) {
+			LOG.info("the user name is not exist");
+			throw new UsernameNotFoundException(username);
+		}
+
+		return User.builder()
+					.username(userInfo.getName())
+					.password("{noop}" + userInfo.getPassword())
+					.roles(userInfo.getRole())
+					.build();
+	}
+   
+```
+2. 設定WebSecurityConfigurerAdapter
+```java
+   	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
+```
+
+
+所有程式碼皆在demo/UserServiceDetails
 
 <sub>*註1: strategy pattern 將行為當作argument傳入方法，java需要使用物件會是lamda表示法把方法傳入，若像JS是 first-class function則可以直接把方法傳入 </sub>
 
