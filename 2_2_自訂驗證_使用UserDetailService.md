@@ -29,6 +29,7 @@ public interface UserDetailsService {
 
 ### 實作
 1. 覆寫UserDetailsService的loadUserByUsername(String username)
+   此處的Repository為mock，若需要真的連到資料庫撈取資料可以使用JpaRepository。
 ```java
    	@Autowired
 	private UserInfoRepository userInfoRepository;
@@ -50,7 +51,7 @@ public interface UserDetailsService {
 	}
    
 ```
-2. 設定WebSecurityConfigurerAdapter
+1. 設定WebSecurityConfigurerAdapter
 ```java
    	@Autowired
 	private UserDetailsService userDetailsService;
