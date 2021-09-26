@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-index
+ this is a public page
 </body>
 </html>
