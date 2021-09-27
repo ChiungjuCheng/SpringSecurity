@@ -42,7 +42,7 @@ public class SecurityContextLogoutHandler implements LogoutHandler {
 }
 
 ```
-
+<sub>SecurityContextLogoutHandler source code</sub>
 
 #### 實作登出
 在WebSecurityConfigurerAdapter物件上做設定
@@ -69,9 +69,13 @@ protected void configure(HttpSecurity http) throws Exception {
 * logoutUrl("/logoutProcess") : 當user向/logoutProcess發送請求時，spring security就會處理登出。
 * addLogoutHandler( LogoutHandler logoutHandler) : 若有一些想額外處理的邏輯，例如log 登出訊息則可以自行定義
 
+程式碼參考: security.userservice.demo
 
 自定義LogoutHandler參考
 https://matthung0807.blogspot.com/2019/11/spring-boot-security-custom-logout.html
 
 SecurityContextHolder
-https://github.com/spring-projects/spring-security/blob/main/core/src/main/java/org/springframework/security/core/context/SecurityContextHolder.java
+* https://github.com/spring-projects/spring-security/blob/main/core/src/main/java/org/springframework/security/core/context/SecurityContextHolder.java
+  
+* https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authentication-securitycontextholder
+
