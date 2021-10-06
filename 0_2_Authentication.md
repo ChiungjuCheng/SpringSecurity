@@ -1,7 +1,9 @@
 0_1_架構介紹的是spring security使用filter檢查每一個request，並且決定是否要開始進入驗證的流程，而這一小節則是要整理驗證的過程。
 
-## SecurityContextHolder
-整個spring security 驗證模型的核心，能夠儲存現在這個執行緒的使用者資料 (Principle)，而其結構如下圖。SecurityContextHolder 的預設是ThreadLocal。
+## SecurityContextHolder - 驗證通過後將Authentication設定在其中
+整個spring security 驗證模型的核心，是spring security儲存已經驗證過的人的資料，能夠儲存現在這個執行緒的使用者資料 (Principle)，spring security不在乎SecurityContextHolder是怎麼被佈署的(被怎樣創立和給值)，只要有值，就會被認為是最近的通過驗證的使用者(該執行緒)。因此要讓使用者視為已通過驗證，最簡單的方式就是直接設定SecurityContextHolder。
+
+結構如下圖。SecurityContextHolder 的預設是ThreadLocal。
 ![securityContextHolderStructure](./picture/10_securityContextHolderStructure.png)
 ## SecurityContext
 SecurityContext 擁有一個Authentication物件。
@@ -25,6 +27,27 @@ ProviderManager預設會把從Authentication拿到的credentials移除，避免�
 ## AuthenticationProvider 
 多個AuthenticationProviders可以被注入到ProviderManager中，每一個AuthenticationProvider提供不同的驗證方法，例如 DaoAuthenticationProvider提供帳號密碼驗證， JwtAuthenticationProvider提供JWT token 驗證。
 
+## AbstractAuthenticationProcessingFilter 
+1. 當有請求要求驗證時，AbstractAuthenticationProcessingFilter會從HttpServletRequest當中創立一個 Authentication物件。Authentication物件的類別是由AbstractAuthenticationProcessingFilter的子類別決定，例如:UsernamePasswordAuthenticationFilter會產出由username和password 建立的UsernamePasswordAuthenticationToken。
+2. Authentication傳入AuthenticationManager並開始驗證流程
+3. 如果失敗
+   * 則 SecurityContextHolder被清掉
+   * RememberMeServices.loginFail開始執行(若remember me 沒有設定則不會執行)
+   * AuthenticationFailureHandler開始執行
+4. 如果成功
+   * 則SessionAuthenticationStrategy被通知有一個新的登入
+   * Authentication設定在SecurityContextHolder，之後SecurityContextPersistenceFilter 會將SecurityContext存在HttpSession
+   * 若有設定remember me則執行RememberMeServices.loginSuccess
+   * ApplicationEventPublisher推出一個InteractiveAuthenticationSuccessEvent
+   * 執行AuthenticationSuccessHandler。
+
+
+
+
+![AuthenticationProcessing](./picture/12_AuthenticationProcessing.png)
+
+
+https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authentication-abstractprocessingfilter
 
 
 參考網址
