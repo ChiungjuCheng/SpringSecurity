@@ -28,8 +28,9 @@ ProviderManager預設會把從Authentication拿到的credentials移除，避免�
 多個AuthenticationProviders可以被注入到ProviderManager中，每一個AuthenticationProvider提供不同的驗證方法，例如 DaoAuthenticationProvider提供帳號密碼驗證， JwtAuthenticationProvider提供JWT token 驗證。
 
 ## AbstractAuthenticationProcessingFilter 
-主要用來處理瀏覽器中HTTP的驗證請求，裡面包含驗證過程(Process)、驗證通過和驗證失敗的處理、Event Publication
-1. 當有請求要求驗證時，AbstractAuthenticationProcessingFilter會從HttpServletRequest當中創立一個 Authentication物件。Authentication物件的類別是由AbstractAuthenticationProcessingFilter的子類別決定，例如:UsernamePasswordAuthenticationFilter會產出由username和password 建立的UsernamePasswordAuthenticationToken。
+主要用來處理瀏覽器中HTTP的驗證請求，裡面包含驗證過程(Process)、驗證通過和驗證失敗的處理、Event Publication。
+會從HttpServletRequest裡面拿出
+1. 當有請求要求驗證時，AbstractAuthenticationProcessingFilter會從HttpServletRequest當中創立一個 Authentication物件。Authentication物件的類別是由AbstractAuthenticationProcessingFilter的子類別決定，例如:UsernamePasswordAuthenticationFilter會產出由username和password 建立的UsernamePasswordAuthenticationToken，自定義的Authentication子類別也是從AbstractAuthenticationProcessingFilter設定。
 2. Authentication傳入AuthenticationManager並開始驗證流程
 3. 如果失敗
    * 則 SecurityContextHolder被清掉
