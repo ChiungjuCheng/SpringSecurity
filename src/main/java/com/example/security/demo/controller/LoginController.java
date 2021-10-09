@@ -1,28 +1,26 @@
 package com.example.security.demo.controller;
 
-import org.springframework.stereotype.Controller;
+import java.util.logging.Logger;
+
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+import com.example.security.demo.auth.LoginAuthenticationProcessingFilter;
+
+
+@RestController
 public class LoginController {
-
-	/**
-	 * 登入頁面
-	 * @return
-	 */
-	@GetMapping("/customLoginPage")
-	public String login() {
-		
-		return "customlogin";
-	}
+	
+	private Logger LOG = Logger.getLogger(LoginController.class.getName());
 	
 	/**
 	 * 登入頁面
 	 * @return
 	 */
-	@GetMapping("/loginSuccess")
-	public String loginSuccess() {
-		
+	@PostMapping("/login")
+	public String loginSuccess() {		
 		return "index";
 	}
 	

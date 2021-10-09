@@ -11,6 +11,8 @@ public class UserInfoEntity {
 	private String password;
 
 	private String role;
+	
+	public UserInfoEntity() {}
 
 	public UserInfoEntity(String name, String password, String role) {
 		this.name = name;

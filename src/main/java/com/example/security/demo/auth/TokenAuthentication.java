@@ -23,8 +23,7 @@ public class TokenAuthentication implements Authentication{
 
 	@Override
 	public String getName() {
-		// TODO Auto-generated method stub
-		return null;
+		return userInfoEntity.getName();
 	}
 
 	@Override
@@ -36,9 +35,8 @@ public class TokenAuthentication implements Authentication{
 
 	/** 回傳使用者資訊*/
 	@Override
-	public UserInfoEntity getCredentials() {
-		// TODO Auto-generated method stub
-		return userInfoEntity;
+	public String getCredentials() {
+		return userInfoEntity.getPassword();
 	}
 
 	@Override
