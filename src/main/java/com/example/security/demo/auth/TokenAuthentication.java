@@ -60,7 +60,6 @@ public class TokenAuthentication implements Authentication{
 	@Override
 	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
-		
 	}
 	
 }
