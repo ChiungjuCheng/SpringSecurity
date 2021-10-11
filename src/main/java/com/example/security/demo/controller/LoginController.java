@@ -15,12 +15,13 @@ public class LoginController {
 	
 	private Logger LOG = Logger.getLogger(LoginController.class.getName());
 	
+	// 
 	/**
 	 * 登入頁面
 	 * @return
 	 */
 	@PostMapping("/login")
-	public String loginSuccess() {		
+	public String loginSuccess() {
 		return "index";
 	}
 	
