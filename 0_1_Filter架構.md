@@ -2,7 +2,7 @@
 Spring security是基於Filter設計的，因此了解Filter的原理和目的有助於理解spring security的架構。在servlet container，使用者發出請求時，會創造一個FilterChain的物件，能夠幫忙修飾request、response或是處理請求相關的業務邏輯。
 
 ## DelegatingFilterProxy
-Servlet container掌管Servlet，而Bean則由spring掌管，因此當創立一個Spring security 的Filter時，需要一個介於Servlet container 和spring ApplicationContext之間的溝通橋療 -  DelegatingFilterProxy。
+Servlet container掌管Servlet，而Bean則由spring掌管，因此當創立一個Spring security 的Filter時，需要一個介於Servlet container 和spring ApplicationContext之間的溝通橋梁 -  DelegatingFilterProxy。
 將DelegatingFilterProxy註冊在Servlet container下，其負責調用繼承Filter的Bean。
 ![DelegatingFilterProxy](picture/07_delegatingFilterProxy.png)
 
@@ -44,7 +44,7 @@ FilterChainProxy是Spring security提供的一種Filter，能夠藉由調派Secu
 
 ## Security Filters
 被SecurityFilterChain API插入到FilterChainProxy裡面。Filters物件的順序很重要，但不用特別去記得Spring Security Filters的順序。若要看詳細的Spring Security Filters類別和順序，可以直接到官方的文件搜尋。
-其中重要的spring security filter 為(依照順序由上到下):
+<mark>**其中重要的spring security filter 為(依照順序由上到下):**</mark>
 * SecurityContextPersistenceFilter (restores Authentication from JSESSIONID)
 * UsernamePasswordAuthenticationFilter (performs authentication)
 * ExceptionTranslationFilter (catch security exceptions from FilterSecurityInterceptor)
