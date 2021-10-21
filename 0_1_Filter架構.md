@@ -1,5 +1,6 @@
 ## Filter
 Spring security是基於Filter設計的，因此了解Filter的原理和目的有助於理解spring security的架構。在servlet container，使用者發出請求時，會創造一個FilterChain的物件，能夠幫忙修飾request、response或是處理請求相關的業務邏輯。
+TODO 補充spring filter建置方法。
 
 ## DelegatingFilterProxy
 Servlet container掌管Servlet，而Bean則由spring掌管，因此當創立一個Spring security 的Filter時，需要一個介於Servlet container 和spring ApplicationContext之間的溝通橋梁 -  DelegatingFilterProxy。
