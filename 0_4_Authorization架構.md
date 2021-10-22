@@ -46,10 +46,11 @@ boolean supports(Class clazz);
 ```
 AccessDecisionVoter有三個static的方法，分別是ACCESS_ABSTAIN(沒意見,0)、ACCESS_DENIED (拒絕,-1)和ACCESS_GRANTED(授給予權限,1)，AccessDecisionVoter依照其vote的augument和security決策邏輯來決定要回傳哪一個static變數，讓AccessDecisionManager來做決定。
 
-ConfigAttribute負責儲存security system相關的設定，裏頭含有一個方法 :
+ConfigAttribute負責儲存security system相關的規則，例如可能含有hasRole("XXX")等等的，在WebSecurityConfigurerAdapter中設定的規則。裏頭含有一個方法 :
 ```java
 String	getAttribute();
 ```
+
 
 ### AccessDecisionVoter 實作
 * RoleVoter - 當ConfigAttribute擁有前綴字ROLE_時就會跳出來要投票，並和GrantedAuthority比對，若有相同的字串結果則通過授權，若沒有符合則會拒絕。當ConfigAttribute沒有前綴字ROLE_時，此voter會回傳abstain。
