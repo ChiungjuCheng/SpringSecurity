@@ -25,7 +25,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  */
 public class LoginAuthenticationProcessingFilter extends AbstractAuthenticationProcessingFilter {
 
-	// TODO improving it by using filter
 	@Autowired
 	JwtService jwtService;
 
@@ -33,7 +32,6 @@ public class LoginAuthenticationProcessingFilter extends AbstractAuthenticationP
 
 	/**
 	 * 設定有哪些url視為要求驗證 constructor是用來設定有哪些請求適用這個filter
-	 * 
 	 * @param url
 	 * @param authManager
 	 */
@@ -52,10 +50,12 @@ public class LoginAuthenticationProcessingFilter extends AbstractAuthenticationP
 
 		LOG.info("AbstractAuthenticationProcessingFilter attemptAuthentication.......");
 
-		UserInfoEntity creds = new ObjectMapper().readValue(request.getInputStream(), UserInfoEntity.class);
+		UserInfoEntity userInfoDTO = new ObjectMapper().readValue(request.getInputStream(), UserInfoEntity.class);
 
+		TokenAuthentication tokenAuthentication =  new TokenAuthentication(userInfoDTO.getName(),userInfoDTO.getPassword());
+		
 		// 開始驗證，並回傳結果
-		return getAuthenticationManager().authenticate(new TokenAuthentication(creds));
+		return getAuthenticationManager().authenticate(tokenAuthentication);
 
 	}
 
@@ -64,13 +64,14 @@ public class LoginAuthenticationProcessingFilter extends AbstractAuthenticationP
 			Authentication authResult) throws IOException, ServletException {
 		LOG.info("AbstractAuthenticationProcessingFilter successfulAuthentication..... creating token");
 
-		jwtService.addAuthentication(response, authResult.getName());
+//		JwtService.addAuthentication(response, authResult.getName());
+		JwtService.addAuthenticationWithClam(response, authResult);
 		
 		SecurityContext context = SecurityContextHolder.createEmptyContext();
 		context.setAuthentication(authResult);
 		SecurityContextHolder.setContext(context);
 
-		chain.doFilter(request, response);
+//		chain.doFilter(request, response);
 	}
 
 }

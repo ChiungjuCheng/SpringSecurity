@@ -13,4 +13,10 @@ public class ResourceController {
 		
 		return "OK";	
 	}
+	
+	@PostMapping("/auth/user1")
+	public String testUserNameUrl() {
+		
+		return "UserName ok";
+	}
 }

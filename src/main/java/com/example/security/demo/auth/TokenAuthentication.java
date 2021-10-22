@@ -2,6 +2,7 @@ package com.example.security.demo.auth;
 
 import java.util.Collection;
 
+import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -12,44 +13,28 @@ import com.example.security.demo.entity.UserInfoEntity;
  * 在到達TokenAuthenticationProvider之前，會被建立出來，然後利用filter傳到TokenAuthenticationProvider內
  * @author user
  */
-public class TokenAuthentication implements Authentication{
+public class TokenAuthentication extends AbstractAuthenticationToken{
 	
-	/** 使用者資訊*/
-	private UserInfoEntity userInfoEntity;
+	private Object principal;
+
+	private Object credentials;
 	
-	public TokenAuthentication(UserInfoEntity userInfoEntity) {
-		this.userInfoEntity = userInfoEntity;
+	public TokenAuthentication(Object principal, Object credentials) {
+		super(null);
+		this.principal = principal;
+		this.credentials = credentials;
+		setAuthenticated(false);
+	}
+		
+	public TokenAuthentication(Object principal, Object credentials,
+			Collection<? extends GrantedAuthority> authorities) {
+		super(authorities);
+		this.principal = principal;
+		this.credentials = credentials;
+		super.setAuthenticated(true); // must use super, as we override
 	}
 
-	@Override
-	public String getName() {
-		return userInfoEntity.getName();
-	}
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-
-	/** 回傳使用者資訊*/
-	@Override
-	public String getCredentials() {
-		return userInfoEntity.getPassword();
-	}
-
-	@Override
-	public Object getDetails() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Object getPrincipal() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public boolean isAuthenticated() {
@@ -60,6 +45,16 @@ public class TokenAuthentication implements Authentication{
 	@Override
 	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public Object getCredentials() {
+		return credentials;
+	}
+
+	@Override
+	public Object getPrincipal() {
+		return principal.toString();
 	}
 	
 }

@@ -14,22 +14,21 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
  * 檢查每一個request
+ * 
  * @author user
  */
-public class JwtAuthFilter extends OncePerRequestFilter{
-	
-	@Autowired
-	private JwtService jwtService;
+public class JwtAuthFilter extends OncePerRequestFilter {
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-	      Authentication authentication = jwtService
-	                .getAuthentication((HttpServletRequest)request);
 
-	        SecurityContextHolder.getContext()
-	                .setAuthentication(authentication);
-	        filterChain.doFilter(request,response);
+		Authentication authentication = JwtService.getAuthentication((HttpServletRequest) request,
+				(HttpServletResponse) response);
+
+		SecurityContextHolder.getContext().setAuthentication(authentication); // 查一下好不
+
+		filterChain.doFilter(request, response);
 	}
 
 }

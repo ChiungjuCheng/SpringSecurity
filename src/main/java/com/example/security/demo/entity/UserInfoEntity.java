@@ -2,6 +2,7 @@ package com.example.security.demo.entity;
 
 /**
  * 使用者資料
+ * 
  * @author user
  */
 public class UserInfoEntity {
@@ -10,14 +11,12 @@ public class UserInfoEntity {
 
 	private String password;
 
-	private String role;
-	
-	public UserInfoEntity() {}
+	public UserInfoEntity() {
+	}
 
-	public UserInfoEntity(String name, String password, String role) {
+	public UserInfoEntity(String name, String password) {
 		this.name = name;
 		this.password = password;
-		this.role = role;
 	}
 
 	public String getName() {
@@ -34,14 +33,6 @@ public class UserInfoEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
 	}
 
 	@Override
@@ -68,6 +59,5 @@ public class UserInfoEntity {
 			return false;
 		return true;
 	}
-	
 
 }
