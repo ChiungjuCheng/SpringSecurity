@@ -55,13 +55,14 @@ String	getAttribute();
 ### AccessDecisionVoter 實作
 * RoleVoter - 當ConfigAttribute擁有前綴字ROLE_時就會跳出來要投票，並和GrantedAuthority比對，若有相同的字串結果則通過授權，若沒有符合則會拒絕。當ConfigAttribute沒有前綴字ROLE_時，此voter會回傳abstain。
 * AuthenticatedVoter - 
+* WebExpressionVoter - the default
 * Custom Voters - 自訂義的voter。
 
 ### AccessDecisionManager 實作
 Spring Security有提供三種實作AccessDecisionManager :
 
 * ConsensusBased - 會依照所有的非ACCESS_ABSTAIN來決定是否授權。
-* AffirmativeBased - 只要有一個以上的ACCESS_GRANTED就會授權，同時忽略所有的ACCESS_DENIED。
+* AffirmativeBased - 只要有一個以上的ACCESS_GRANTED就會授權，同時忽略所有的ACCESS_DENIED。(default)
 * UnanimousBased - 只要有一個ACCESS_DENIED就會拒絕授權。
 
 另外若所有的voters都是abstain，AccessDecisionManager的實作類別都有其參數來控制接下來的流程。
