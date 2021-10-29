@@ -1,3 +1,4 @@
+獲得Resource ower的授權和其驗證通過後，可以帶著Authentication server 提供的token去Resource server拿取資料。
 # 設定
 
 
