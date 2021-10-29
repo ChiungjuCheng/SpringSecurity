@@ -1,8 +1,9 @@
-# SpringSecurity
-spring security支援使用session做資源權限存取控管外，也可以用自製的filter和provider來使用token。
-
-## MVC架構下使用session
+## MVC架構下使用Session驗證和授權
 ch0_3_0 ~ 0_3_1
 ch1~3
 
-## Restful server使用token
+## 使用Token驗證和授權
+ch4_0_0 ~ 4_5
+
+## OAuth2.0
+ch5_0 之後
