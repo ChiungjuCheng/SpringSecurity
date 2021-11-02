@@ -27,9 +27,9 @@ public interface UserDetailsService {
 ### UserDetails
 主要提供使用者的資料，spring security不會直接操作這個物件。開發者可以將自訂的DAO回傳的資料設定到UserDetails物件，並讓UserDetailsService回傳。
 
-### 實作
+### 實作UserDetailsService
 1. 覆寫UserDetailsService的loadUserByUsername(String username)
-   此處的Repository為mock，若需要真的連到資料庫撈取資料可以使用JpaRepository。
+   此處的UserInfoRepository寫在程式碼裡，若需要真的連到資料庫撈取資料可以使用JpaRepository。
 ```java
    	@Autowired
 	private UserInfoRepository userInfoRepository;
@@ -51,7 +51,8 @@ public interface UserDetailsService {
 	}
    
 ```
-1. 設定WebSecurityConfigurerAdapter
+### 實作UserDetailsService
+2. 設定WebSecurityConfigurerAdapter 使其使用自定義的UserDetailsService
 ```java
    	@Autowired
 	private UserDetailsService userDetailsService;
@@ -61,7 +62,7 @@ public interface UserDetailsService {
 		auth.userDetailsService(userDetailsService);
 	}
 ```
-
+Spring security會使用default的provider去呼叫UserDetailsService.loadUserByUsername(String username)。
 
 所有程式碼皆在demo/UserServiceDetails
 
