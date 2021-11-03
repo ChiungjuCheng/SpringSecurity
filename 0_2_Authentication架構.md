@@ -23,27 +23,28 @@ ProviderManager 也可以設定Parent AuthenticationManager，當沒有Authentic
 **移除credentials**
 ProviderManager預設會把從Authentication拿到的credentials移除，避免資料外洩，但若Authentication含有做為快取的物件參考，當移除credentials時，快取就擁有沒有值可以使用，因此有兩個解決辦法，第一個是在實現快取的物件或是AuthenticationProvider中直接複製Authentication，第二個則是將eraseCredentialsAfterAuthentication設定為disable。
 
-
 ## AuthenticationProvider 
 多個AuthenticationProviders可以被注入到ProviderManager中，每一個AuthenticationProvider提供不同的驗證方法，例如 DaoAuthenticationProvider提供帳號密碼驗證， JwtAuthenticationProvider提供JWT token 驗證。
 
 ## AbstractAuthenticationProcessingFilter 
 主要用來處理瀏覽器中HTTP的驗證請求，裡面包含驗證過程(Process)、驗證通過和驗證失敗的處理、Event Publication。
-會從HttpServletRequest裡面拿出
-1. 當有請求要求驗證時，AbstractAuthenticationProcessingFilter會從HttpServletRequest當中創立一個 Authentication物件。Authentication物件的類別是由AbstractAuthenticationProcessingFilter的子類別決定，例如:UsernamePasswordAuthenticationFilter會產出由username和password 建立的UsernamePasswordAuthenticationToken，自定義的Authentication子類別也是從AbstractAuthenticationProcessingFilter設定。
+會從HttpServletRequest裡面拿出使用者要用來驗證的資料
+1. 當有請求要求驗證時，AbstractAuthenticationProcessingFilter會從HttpServletRequest當中創立一個Authentication物件。Authentication物件的類別是由AbstractAuthenticationProcessingFilter的子類別決定，例如:UsernamePasswordAuthenticationFilter會產出由username和password 建立的UsernamePasswordAuthenticationToken，自定義的Authentication子類別也是從AbstractAuthenticationProcessingFilter設定。
 2. Authentication傳入AuthenticationManager並開始驗證流程
-3. 如果失敗
+3. 如果失敗，呼叫protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,AuthenticationException failed) throws IOException, ServletException 方法。
    * 則 SecurityContextHolder被清掉
    * RememberMeServices.loginFail開始執行(若remember me 沒有設定則不會執行)
    * AuthenticationFailureHandler開始執行
-4. 如果成功
-   * 則SessionAuthenticationStrategy被通知有一個新的登入
+1. 如果成功，呼叫void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException。
+   * SessionAuthenticationStrategy被通知有一個新的登入
    * Authentication設定在SecurityContextHolder，之後SecurityContextPersistenceFilter 會將SecurityContext存在HttpSession
    * 若有設定remember me則執行RememberMeServices.loginSuccess
    * ApplicationEventPublisher推出一個InteractiveAuthenticationSuccessEvent
    * 執行AuthenticationSuccessHandler。
-
-
+  
+  **預設**
+  * AuthenticationProcessingFilter : UsernamePasswordAuthenticationFilter
+  * AuthenticationSuccessHandler : SimpleUrlAuthenticationSuccessHandler 
 
 
 
