@@ -15,9 +15,9 @@ end-user，資料的擁有者，例如chiungjuCheng就擁有其github的reposito
 將使用者導去驗證頁面
 
 ## OAuth2 流程圖
-![OAuth2.0process](./picture/16_OAuth2.0_process.png)
+![OAuth2.0process](/picture/16_OAuth2.0_process.png)
 
-![OAuth2.0process2](./picture/17_OAuth2.0_pocess2.png)
+![OAuth2.0process2](./../picture/17_OAuth2.0_pocess2.png)
 
 ## Scope
 允許應用程式擁有限制權限的access token

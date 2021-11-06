@@ -93,11 +93,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 |![passwordEncoder](picture/03_PasswordEncodeExcption.png)|
 -
 password的前贅字是告訴spring security的要用哪種編碼的方式編譯密碼，{noop}表示使用名碼
-|![userInfo](./picture/05_userTableInfo.png)|
+|![userInfo](/picture/05_userTableInfo.png)|
 -
 **未設定authorities**
 帳號一定要在authorities表格設定權限，否則會回傳Bad Credentials
-|![badCredentials](picture/06_badCredentials.png)|
+|![badCredentials](/picture/06_badCredentials.png)|
 -
 
 TODO : 找Role的資料

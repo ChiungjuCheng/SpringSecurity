@@ -30,7 +30,7 @@ spring:
             clientSecret: your-secret
 ```
 
-![github oauth application](./picture/15_registerOauthApplication.png)
+![github oauth application](/picture/15_registerOauthApplication.png)
 
 ## 流程解釋
 到這裡其實就完成了一個簡單的OAuth2.0，這時候專案就可以起動，並在輸入localhost:8085時，Spring security就會試著找到authenticated物件，當失敗時就會重導到<mark>http://localhost:8080/oauth2/authorization/{registrationId}</mark>。
