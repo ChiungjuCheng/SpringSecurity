@@ -8,3 +8,16 @@ https://spring.io/blog/2018/03/06/using-spring-security-5-to-integrate-with-oaut
 
 Security Spring Rest API using OAuth2.0
 https://dzone.com/articles/secure-spring-rest-api-using-oauth2
+
+
+https://stackoverflow.com/questions/57761917/spring-5-security-oauth2-login-redirect-loop
+
+現在會一直遇到tokenType cannot be null
+https://stackoverflow.com/questions/58629596/access-token-response-tokentype-cannot-be-null
+https://github.com/spring-projects/spring-security/issues/5983#issuecomment-430620308
+
+解決方法
+https://github.com/jzheaux/messaging-app/blob/master/client-app/src/main/java/sample/config/SecurityConfig.java#L61
+
+cover
+https://github.com/jzheaux/messaging-app/blob/392a1eb724b7447928c750fb2e47c22ed26d144e/client-app/src/main/java/sample/web/CustomAccessTokenResponseConverter.java#L35

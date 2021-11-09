@@ -77,6 +77,14 @@ TODO
 使用Stateless的方式實作login
 https://www.callicoder.com/spring-boot-security-oauth2-social-login-part-2/
 
+打API
+https://www.letswrite.tw/instagram-basic-display-api/
+
+Instagram api
+https://www.jyes.com.tw/news.php?act=view&id=2302
+https://www.google.com/?code=AQAlB5UH5cLCkLwcf-P2XmOfKGh1glmahrS66FjTIFKyxD1oTGVDgZsyCmep7tmdX4ixiMKoted3zKOxIH4Fae6261AVImmSRPfyGGhZIOc3zLW-MGA1dlbN8EWMUftXHfUh0LwBxs19Jy83r51tnKqbBp8HpNyzdQqPidilTZ00bZ8d4N4UMlWZPW44uamhZygZ8xbL1bWakoTiycywfGm8VGc5csYbsJzfEM8M36kXGQ#_
+
+https://www.jyes.com.tw/news.php?act=view&id=2302
 
 # 參考網址:
 login的實作
