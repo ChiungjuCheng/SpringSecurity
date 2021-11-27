@@ -29,7 +29,6 @@ https://www.youtube.com/watch?v=PfvSD6MmEmQ
 在spring security的OAuth2.0框架中，提供OAuth_2.0 login、OAuth_2.0 Client和OAuth_2.0 server。
 
 * OAuth_2.0 login 單純提供OAuth2.0登入，登入驗證完後
-* 
 
 Oauth2.0 講解影片
 https://www.youtube.com/watch?v=PfvSD6MmEmQ

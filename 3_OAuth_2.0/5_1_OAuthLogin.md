@@ -86,7 +86,7 @@ https://www.google.com/?code=AQAlB5UH5cLCkLwcf-P2XmOfKGh1glmahrS66FjTIFKyxD1oTGV
 
 https://www.jyes.com.tw/news.php?act=view&id=2302
 
-# 參考網址:
+# 參考網址
 login的實作
 https://spring.io/guides/tutorials/spring-boot-oauth2/
 https://medium.com/swlh/spring-boot-oauth2-login-with-github-88b178e0c004
