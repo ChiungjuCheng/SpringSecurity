@@ -4,7 +4,8 @@
 整個spring security 驗證模型的核心，是spring security儲存已經驗證過的人的資料，能夠儲存現在這個執行緒的使用者資料 (Principle)，spring security不在乎SecurityContextHolder是怎麼被佈署的(被怎樣創立和給值)，只要有值，就會被認為是最近的通過驗證的使用者(該執行緒)。因此要讓使用者視為已通過驗證，最簡單的方式就是直接設定SecurityContextHolder。
 
 結構如下圖。SecurityContextHolder 的預設是ThreadLocal。
-![securityContextHolderStructure](./picture/10_securityContextHolderStructure.png)
+![securityContextHolderStructure](/picture/10_securityContextHolderStructure.png)
+
 ## SecurityContext
 SecurityContext 擁有一個Authentication物件。
 ## Authentication 
@@ -19,7 +20,8 @@ SecurityContext 擁有一個Authentication物件。
 ## AuthenticationManager and ProviderManager
 AuthenticationManager 是 Spring Security的API，負責定義該如何驗證。在實現API的物件當中，ProviderManager是最常見的物件，負責調用AuthenticationProviders集合。
 ProviderManager 也可以設定Parent AuthenticationManager，當沒有AuthenticationProvider可以提供驗證流程時，Parent AuthenticationManager 就能夠提供驗證方法，很多時候多個ProviderManager會設定相同的Parent AuthenticationManager ，因為可能有多個SecurityFilterChain 物件會使用相同的驗證方法。
-![ProviderManager](./picture/11_providerManager.png)
+![ProviderManager](/picture/11_providerManager.png)
+
 **移除credentials**
 ProviderManager預設會把從Authentication拿到的credentials移除，避免資料外洩，但若Authentication含有做為快取的物件參考，當移除credentials時，快取就擁有沒有值可以使用，因此有兩個解決辦法，第一個是在實現快取的物件或是AuthenticationProvider中直接複製Authentication，第二個則是將eraseCredentialsAfterAuthentication設定為disable。
 
@@ -48,11 +50,9 @@ ProviderManager預設會把從Authentication拿到的credentials移除，避免�
 
 
 
-![AuthenticationProcessing](./picture/12_AuthenticationProcessing.png)
+![AuthenticationProcessing](/picture/12_AuthenticationProcessing.png)
 
 
-https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authentication-abstractprocessingfilter
-
-
-參考網址
+參考網址  
 https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authentication-authentication
+https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authentication-abstractprocessingfilter

@@ -74,5 +74,5 @@ Spring Security有提供三種實作AccessDecisionManager :
 secure object執行完後(例如對應到某個url的controller方法)，有時候需要修飾secure object的return資料。
 
 
-參考資料
+參考資料  
 https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authorization

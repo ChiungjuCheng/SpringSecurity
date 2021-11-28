@@ -5,7 +5,7 @@ TODO 補充spring filter建置方法。
 ## DelegatingFilterProxy
 Servlet container掌管Servlet，而Bean則由spring掌管，因此當創立一個Spring security 的Filter時，需要一個介於Servlet container 和spring ApplicationContext之間的溝通橋梁 -  DelegatingFilterProxy。
 將DelegatingFilterProxy註冊在Servlet container下，其負責調用繼承Filter的Bean。
-![DelegatingFilterProxy](picture/07_delegatingFilterProxy.png)
+![DelegatingFilterProxy](/picture/07_delegatingFilterProxy.png)
 
 DelegatingFilterProxy使用Proxy pattern，當只有真正要開始使用Filter(Spring Bean)時才真正的初始化，被代理的物件。下方為DelegatingFilterProxy 的source code，delegate是背後真正在執行運算的物件。
 
@@ -52,7 +52,7 @@ FilterChainProxy是Spring security提供的一種Filter，能夠藉由調派Secu
 * FilterSecurityInterceptor (may throw authentication and authorization exceptions)
 
 參考網址: https://stackoverflow.com/questions/41480102/how-spring-security-filter-chain-works
-![mutipleSecurityFilterChain](./picture/08_mutipleSecurityFilterChain.png)
+![mutipleSecurityFilterChain](/picture/08_mutipleSecurityFilterChain.png)
 
 ## ExceptionTranslationFilter 
 當使用者沒有驗證或是沒有權限卻要求某個資源時，spring security會拋出AuthenticationException或是AccessDeniedException，
@@ -71,19 +71,15 @@ try {
     }
 }
 ```
-![excetionHandlingProcess](./picture/09_exceptionProccess.png)
-
+![excetionHandlingProcess](/picture/09_exceptionProccess.png)
 ## AuthenticationEntryPoint
 產生用來要求使用者提供credentials的 HTTP response，通常實現是讓使用者重導回登入頁面或是回傳WWW-Authenticate header。
 
-
-
-參考資料 : 
+參考資料  
 https://docs.spring.io/spring-security/site/docs/current/reference/html5/#authz-pre-invocation
 https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authentication
-
 https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-architecture
 
-補充
+補充  
 ExceptionTranslationFilter source code
 https://github.com/spring-projects/spring-security/blob/main/web/src/main/java/org/springframework/security/web/access/ExceptionTranslationFilter.java

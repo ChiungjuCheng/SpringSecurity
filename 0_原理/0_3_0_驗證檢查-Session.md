@@ -10,9 +10,9 @@ HTTP session相關的功能，由SessionManagementFilter操作SessionAuthenticat
 * Allows pluggable support for HttpSession-related behaviour when an authentication occurs.
 * Typical use would be to make sure a session exists or to change the session Id to guard against session-fixation attacks.
 其子類別包含
-![SessionAuthenticationStrategy](./picture/13_SessionAuthenticationStrategy_implement.png)
+![SessionAuthenticationStrategy](/picture/13_SessionAuthenticationStrategy_implement.png)
 
 https://docs.spring.io/spring-security/site/docs/3.2.8.RELEASE/apidocs/org/springframework/security/web/authentication/session/SessionAuthenticationStrategy.html
 
-參考資料
+參考資料  
 https://docs.spring.io/spring-security/site/docs/current/reference/html5/#session-mgmt
