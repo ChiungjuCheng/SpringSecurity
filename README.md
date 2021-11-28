@@ -1,11 +1,20 @@
 # 0_原理
-spring security的驗證和授權流程筆記
-
+spring security的驗證和授權流程和原理
+* [0_0_介紹](/0_原理/0_0_介紹.md)
+* [0_1_Filter架構](/0_原理/0_1_Filter架構.md)
+* [0_2_Authentication架構](/0_原理/0_2_Authentication架構.md)
+* [0_3_0_驗證檢查-Session](/0_原理/0_3_0_驗證檢查-Session.md)
+* [0_3_1_Rememberme](/0_原理/0_3_1_Rememberme.md)
+* [0_4_Authorization架構](/0_原理/0_4_Authorization架構.md)
 
 # 1_MVC實作
 MVC架構下使用Session驗證和授權
-ch0_3_0 ~ 0_3_1
-ch1~3
+* [1_0_環境建置](/1_MVC實作/1_0_環境建置.md)
+* [1_1_SpringBoot建置環境](/1_MVC實作/1_1_SpringBoot建置環境.md)
+* [2_0_自訂驗證_authInMemory](/1_MVC實作/2_0_自訂驗證_authInMemory.md)
+* [2_1_自訂驗證_authWithJDBC](/1_MVC實作/2_1_自訂驗證_authWithJDBC.md)
+* [2_2_自訂驗證_使用UserDetailService](/1_MVC實作/2_2_自訂驗證_使用UserDetailService.md)
+* [2_9_Logout](/1_MVC實作/2_9_Logout.md)
 
 # 2_JWT驗證實作
 使用Token驗證和授權

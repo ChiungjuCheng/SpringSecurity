@@ -48,10 +48,7 @@ ProviderManager預設會把從Authentication拿到的credentials移除，避免�
   * AuthenticationProcessingFilter : UsernamePasswordAuthenticationFilter
   * AuthenticationSuccessHandler : SimpleUrlAuthenticationSuccessHandler 
 
-
-
 ![AuthenticationProcessing](/picture/12_AuthenticationProcessing.png)
-
 
 參考網址  
 https://docs.spring.io/spring-security/site/docs/current/reference/html5/#servlet-authentication-authentication
