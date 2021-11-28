@@ -16,44 +16,33 @@ Authorization callback URL is set to http://localhost:8080/login/oauth2/code/cli
 接受到這個requst就會經過OAuth2AuthorizationRequestRedirectFilter
 讓他初始化Authorization Request 並開始Authorization Code grant flow.
 
-# OAuth2LoginAuthenticationFilter
-授權後Authorization Server會重導user經過這個filter，並呼叫AuthenticationManager驗證，provider使用OAuth2AuthorizationCodeAuthenticationProvider。
+# 使用code請求token - OAuth2LoginAuthenticationFilter
+授權後Authorization Server會重導user經過這個filter，並呼叫AuthenticationManager驗證，provider使用**OAuth2AuthorizationCodeAuthenticationProvider**。
+OAuth2AuthorizationCodeAuthenticationProvider會使用OAuth2AccessTokenResponseClien(default是DefaultAuthorizationCodeTokenResponseClient)，其內部會使用RestOperations拿著code，去向Authorization Server's Token Endpoint換取token。
 
 
 https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/oauth2/client/web/OAuth2LoginAuthenticationFilter.html
 
-# OAuth2AuthorizationCodeAuthenticationProvider 
-帶著code去請求Access Token
+# OAuth2AccessTokenResponseClient 中的coverter TokenType cannot be null
+在標準中由於token_type是REQUIRED，Spring Security 5.1 就強迫一定要放TokenType，
+不然會拋出exception，而底下為參考作法。
 
 Access Token Request OAuth2AuthorizationCodeGrantRequestEntityConverter
 AbstractOAuth2AuthorizationGrantRequestEntityConverter
-
-# DefaultAuthorizationCodeTokenResponseClient 
-拿Code去要access_token
-# TokenType cannot be null
-在標準中由於token_type是REQUIRED，Spring Security 5.1 就強迫一定要放TokenType，
-不然會拋出exception，而底下為參考作法。
 
 解決方法
 https://github.com/jzheaux/messaging-app/blob/master/client-app/src/main/java/sample/config/SecurityConfig.java#L61
 
 TokenType cannot be null exception原因
 https://stackoverflow.com/questions/58629596/access-token-response-tokentype-cannot-be-null
+
 https://github.com/spring-projects/spring-security/issues/5983#issuecomment-430620308
 
-cover
+ CustomAccessTokenCover
 https://github.com/jzheaux/messaging-app/blob/392a1eb724b7447928c750fb2e47c22ed26d144e/client-app/src/main/java/sample/web/CustomAccessTokenResponseConverter.java#L35
 
-# OAuth2AuthorizationCodeAuthenticationProvider
-OAuth2AuthorizationCodeAuthenticationProvider 會去呼叫OAuth2UserService.loadUser();
-此時就會去打user-info
-https://localhost:8081/oauth2/login/oauth2/code/cust
 
-**OAuth2UserRequestEntityConverter 修改requst**
-
-
-# Client application
-參考
+參考資料
 https://spring.io/blog/2018/03/06/using-spring-security-5-to-integrate-with-oauth-2-secured-services-such-as-facebook-and-github
 
 https://github.com/spring-projects/spring-security-samples/tree/main/servlet/spring-boot/java/oauth2/webclient
