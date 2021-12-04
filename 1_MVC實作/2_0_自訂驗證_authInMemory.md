@@ -1,6 +1,5 @@
-#### MVC架構下的驗證
-此處以MVC的架構自訂驗證，不論是驗證或驗證通過後，都直接回傳一個jsp網頁，之後會再新增適用於Restful server的驗證-「JSON Web Token」（JWT）。
-為了讓server可以讓jsp渲染網頁，需要在pom.xml底下新增tomcat-embed-jasper，它的作用是編譯jsp並使其渲染到瀏覽器上，若沒有添加，會讓server端直接回傳一個jsp檔案給client下載。
+# MVC架構下的驗證
+此處以MVC的架構自訂驗證，不論是驗證或驗證通過後，都直接回傳一個jsp網頁，為了讓server可以讓jsp渲染網頁，需要在pom.xml底下新增tomcat-embed-jasper，它的作用是編譯jsp並使其渲染到瀏覽器上，若沒有添加，會讓server端直接回傳一個jsp檔案給client下載。
 ```xml
 <!-- required for JSP compilation -->
 	<dependency>
@@ -10,7 +9,7 @@
 	</dependency>
 ```
 
-#### WebSecurityConfigurerAdapter介紹
+# WebSecurityConfigurerAdapter介紹
 在01_環境建置章節中，使用的是default的設定，只要是任何發送給spring boot的請求都會需要驗證，若想自訂需要被驗證的url則需要宣告一個繼承org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter的類別。
 除了用java code做設定以外，也可以使用xml來做設定。
 ```java
@@ -50,7 +49,68 @@ WebSecurityConfigurerAdapter 為abstract class，裡頭有許多可視為default
 	}
 
 ```
-#### 自訂驗證實作
+# AbstractUserDetailsAuthenticationProvider and DaoAuthenticationProvider
+這裡使用的Provider為AbstractUserDetailsAuthenticationProvider，其已經寫好的驗證的流程，但是交由子類別來Override掉其中的抽象方法，例如retrieveUser方法等，在default的流程中，則是使用DaoAuthenticationProvider來繼承並override。  
+  
+
+ 節錄自AbstractUserDetailsAuthenticationProvider  
+ [AbstractUserDetailsAuthenticationProvider source code](https://github.com/spring-projects/spring-security/blob/main/core/src/main/java/org/springframework/security/authentication/dao/AbstractUserDetailsAuthenticationProvider.java)
+```java
+
+	UserDetails user = this.userCache.getUserFromCache(username);
+		if (user == null) {
+			cacheWasUsed = false;
+			try {
+				// retrieveUser 交給子類別實作
+				user = retrieveUser(username, (UsernamePasswordAuthenticationToken) authentication);
+			}
+			catch (UsernameNotFoundException ex) {
+				// 當Username不存在時拋出錯誤
+				this.logger.debug("Failed to find user '" + username + "'");
+				if (!this.hideUserNotFoundExceptions) {
+					throw ex;
+				}
+				throw new BadCredentialsException(this.messages
+						.getMessage("AbstractUserDetailsAuthenticationProvider.badCredentials", "Bad credentials"));
+			}
+			Assert.notNull(user, "retrieveUser returned null - a violation of the interface contract");
+		}
+
+```
+
+節錄自DaoAuthenticationProvider 
+[DaoAuthenticationProvider source code](https://github.com/spring-projects/spring-security/blob/main/core/src/main/java/org/springframework/security/authentication/dao/DaoAuthenticationProvider.java)
+```java
+	@Override
+	protected final UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
+			throws AuthenticationException {
+		prepareTimingAttackProtection();
+		try {
+			// 使用tUserDetailsService
+			UserDetails loadedUser = this.getUserDetailsService().loadUserByUsername(username);
+			if (loadedUser == null) {
+				throw new InternalAuthenticationServiceException(
+						"UserDetailsService returned null, which is an interface contract violation");
+			}
+			return loadedUser;
+		}
+		catch (UsernameNotFoundException ex) {
+			mitigateAgainstTimingAttack(authentication);
+			throw ex;
+		}
+		catch (InternalAuthenticationServiceException ex) {
+			throw ex;
+		}
+		catch (Exception ex) {
+			throw new InternalAuthenticationServiceException(ex.getMessage(), ex);
+		}
+	}
+
+```
+
+
+
+# 自訂驗證實作
 
 **1. 設定所有的requst都需要先經過驗證(即登入) - 覆寫WebSecurityConfigurerAdapter中的configure(HttpSecurity http)**
 設定所有的url都需要登入後才能傳送請求，覆寫
@@ -73,7 +133,7 @@ protected void configure(HttpSecurity http) throws Exception {
 * loginProcessingUrl("/loginProcess") : 當傳送request到這個url時spring security filter就會幫忙驗證username和password，不需要特定寫一個RequestMapping方法。
 
 **2. 設定可以登入的帳號密碼 - 覆寫WebSecurityConfigurerAdapter中的configure(AuthenticationManagerBuilder auth)**
-此處用簡單的存在記憶體中的帳號密碼做登入使用，在demo2再進一步的改使用資料庫內的帳號密碼
+此處用簡單的存在記憶體中的帳號密碼做登入使用，在demo2再進一步的改使用資料庫內的帳號密碼，一定要使用Encoder，否則不會成功。
 ```java
 // 設定使用者帳號、密碼和角色
 @Override
